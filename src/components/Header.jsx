@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import NavItem from './NavItem'
 import Login from './Login';
-import Logout from './Logout';
+// import Logout from './Logout';
 import { FaUserAlt } from "react-icons/fa";
 
 const Header = () => {
-    const user = 0;
+    const user = null;
     const [isOpen, setIsOpen] = useState(false);
     return (
         <header className='py-3 '>
@@ -22,7 +22,7 @@ const Header = () => {
 
 
                 <div>
-                    {user == 3 ? <Login /> :
+                    {user == null ? <Login /> :
                         <div className=' relative '>
 
                             <button onClick={() => { setIsOpen(!isOpen), console.log(isOpen) }} className='flex items-center py-2 gap-1 md:gap-3

@@ -10,6 +10,7 @@ import Product from './components/dashboard/Product'
 import Customer from './components/dashboard/Customer'
 import Transaction from './components/dashboard/Transaction'
 import Checkout from './pages/Checkout'
+import LoginPage from './pages/LoginPage'
 const App = () => {
   return (
     
@@ -20,6 +21,8 @@ const App = () => {
           <Route path='/search' element={<Search />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/cart/checkout' element={<Checkout />} />
+          <Route path='/login' element={<LoginPage />} />
+
 
 
           {/* admin dashboard  */}

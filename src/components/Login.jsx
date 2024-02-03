@@ -1,10 +1,19 @@
-import React from 'react'
 import { IoMdLogIn } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
-    return (
-        <button type='button' className='flex items-center gap-1 bg-[#000000df] hover:bg-[#000000c8] 
-        rounded-[20px] text-[white] px-3 py-1 font-semibold uppercase '><IoMdLogIn /> Login</button>
-    )
-}
+    const navigate = useNavigate()
+  return (
+    <button
+    onClick={()=>navigate('/login')}
 
-export default Login
+      type="button"
+      className="flex items-center gap-1 bg-[#000000df] hover:bg-[#000000c8] 
+        rounded-[20px] text-[white] px-3 py-1 font-semibold uppercase "
+    >
+      <IoMdLogIn /> 
+      Login
+    </button>
+  );
+};
+
+export default Login;
