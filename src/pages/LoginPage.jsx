@@ -2,19 +2,40 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../Firebase";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../redux/api/userApi";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("male");
   const [dob, setDob] = useState("");
   const navigate = useNavigate();
+  const [ login ] = useLoginMutation();
 
-  const loginHandler = async () => {
+  const loginHandler = async (e) => {
     try {
-    //   e.prevent.default();
+        e.preventDefault();
+        
+
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
       console.log(user);
-      navigate('/');
+      const res = await login({
+        _id: "sk1122",
+        email: "xyz@gmail.com",
+        photo: "jbwiuvbuwrvh9",
+        name: "jbiuvuwhvu",
+        gender: "male",
+
+        dob: "2002-09-02",
+      });
+      console.log(res.data);
+      if (res.data.success) {
+        console.log(res.data);
+      } else {
+        console.log("error occur");
+      }
+
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -29,17 +50,17 @@ const LoginPage = () => {
           </div>
           <div className="mt-5">
             {/* Form */}
-            <form>
+            <form onSubmit={loginHandler}>
               <div className="grid gap-y-4">
                 {/* Form Group */}
                 <div>
-                  <label htmlFor="email" className="block text-md mb-2 ">
+                  <label htmlFor="gender" className="block text-md mb-2 ">
                     Gender
                   </label>
                   <div className="relative">
                     <select
-                      name=""
-                      id=""
+                      name="gender"
+                      id="gender"
                       className="w-full p-2 border border-gray-200 rounded-lg"
                       onChange={(e) => {
                         setGender(e.target.value);
@@ -79,7 +100,7 @@ const LoginPage = () => {
                 {/* Form Group */}
                 <div>
                   <div className="flex justify-between items-center">
-                    <label htmlFor="password" className="block text-md mb-2 ">
+                    <label htmlFor="dob" className="block text-md mb-2 ">
                       DOB
                     </label>
                   </div>
@@ -87,14 +108,12 @@ const LoginPage = () => {
                     <input
                       type="date"
                       id="dob"
-                      name="password"
+                      name="dob"
                       value={dob}
                       onChange={(e) => {
                         setDob(e.target.value);
                       }}
                       className="py-3 px-4 uppercase block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                      required
-                      aria-describedby="password-error"
                     />
                     <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                       <svg
@@ -114,7 +133,7 @@ const LoginPage = () => {
 
                 <button
                   type="submit"
-                  onClick={loginHandler}
+                  
                   className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   <svg
@@ -148,6 +167,7 @@ const LoginPage = () => {
             {/* End Form */}
             {JSON.stringify(gender)}
             {JSON.stringify(dob)}
+            {/* <button onClick={()=>toast.error("hiii")}>taost</button> */}
           </div>
         </div>
       </div>
