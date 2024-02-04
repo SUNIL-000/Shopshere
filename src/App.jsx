@@ -19,6 +19,7 @@ import axios from "axios";
 import { auth } from "./Firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userExist } from "./redux/reducer/userReducer";
+import ProtectedRoutes from "./components/protected-routes";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,14 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/cart/checkout" element={<Checkout />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoutes isAuthenticate={true}>
+              <LoginPage />
+            </ProtectedRoutes>
+          }
+        />
 
         {/* admin dashboard  */}
         <Route path="/admin/dashboard" element={<Dashboard />} />

@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavItem from "./NavItem";
 import Login from "./Login";
-import Logout from './Logout';
+import Logout from "./Logout";
 import { FaUserAlt } from "react-icons/fa";
 
-const Header = ({user}) => {
-  console.log(user._id)
+const Header = ({ user }) => {
+  console.log(user._id);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="py-3 ">
@@ -59,7 +59,7 @@ const Header = ({user}) => {
                             </span>
                           </div>
                           <p className="font-normal text-base leading-tight text-gray-500 truncate">
-                           {user.email}
+                            {user.email}
                           </p>
                         </div>
                       </div>
@@ -88,18 +88,15 @@ const Header = ({user}) => {
                     )}
 
                     <div aria-label="footer" className="pt-1">
-                      <button
-                        type="button"
-                        className="flex items-center space-x-3 py-2 px-4 w-full leading-6 text-lg text-gray-600 focus:outline-none  rounded-md"
-                      >
-                        <span><Logout /></span>
-                      </button>
+                      <Logout />
                     </div>
                   </div>
                 </div>
               </dialog>
             </div>
-          ) : <Login /> }
+          ) : (
+            <Login />
+          )}
         </div>
       </nav>
     </header>
