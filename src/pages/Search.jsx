@@ -48,9 +48,9 @@ const Search = () => {
         <div className="md:w-4/5  h-auto mx-auto md:min-h-screen  flex flex-wrap flex-col  ">
           <div className=" flex justify-center items-center flex-wrap text-2xl font-bold   w-[90%] mx-auto ">
               <span className="bg-white p-2.5 rounded-md"><IoSearch /></span>
-              <input type="search" name="" className="p-2 text-lg rounded-md border-none focus:border-none focus:ring-white" id="" placeholder="Search Product" />
+              <input type="search" name="" className="p-2 text-lg rounded-md border-none focus:border-none focus:outline-none focus:ring-white" id="" placeholder="Search Product" />
           </div>
-          <div className="md:full  h-auto mx-auto md:min-h-screen rounded-lg px-8 py-5 flex flex-wrap gap-3 justify-evenly">
+          <div className="md:full  h-auto mx-auto md:min-h-screen rounded-lg px-8 py-5 flex flex-wrap gap-0 md:gap-3  justify-evenly">
             <ProductCard />
             <ProductCard />
             <ProductCard />

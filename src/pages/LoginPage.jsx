@@ -9,41 +9,48 @@ const LoginPage = () => {
   const [gender, setGender] = useState("male");
   const [dob, setDob] = useState("");
   const navigate = useNavigate();
-  const [ login ] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const loginHandler = async (e) => {
     try {
-        e.preventDefault();
-        
-
+      e.preventDefault();
+  
+      // Use GoogleAuthProvider for authentication
       const provider = new GoogleAuthProvider();
+  
+      // Sign in with Google popup
       const { user } = await signInWithPopup(auth, provider);
-      console.log(user);
-      const res = await login({
-        _id: "sk1122",
-        email: "xyz@gmail.com",
-        photo: "jbwiuvbuwrvh9",
-        name: "jbiuvuwhvu",
-        gender: "male",
-
-        dob: "2002-09-02",
+      console.log('Logged in user:', user);
+  
+      const { data } = await login({
+        _id: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+        gender,
+        dob,
       });
-      console.log(res.data);
-      if (res.data.success) {
-        console.log(res.data);
+  
+      // Assuming your login function returns some data
+     
+      console.log('Login data:', data);
+  
+      // If the login was successful, navigate to "/"
+      if (data) {
+        toast.success(data.message);
+        console.log(data)
+        // navigate("/");
       } else {
-        console.log("error occur");
+       toast.error('Error occurred during login');
+        // toast.error(data.message)
       }
-
-      navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error('Error during login:', error);
     }
   };
-
   return (
     <main className="w-full max-w-md mx-auto p-6">
-      <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-md">
+      <div className="mt-6 bg-white border border-gray-200 rounded-md shadow-md">
         <div className="p-4 sm:p-7">
           <div className="text-center">
             <h1 className="block text-2xl font-bold text-gray-800">Sign in</h1>
@@ -110,6 +117,7 @@ const LoginPage = () => {
                       id="dob"
                       name="dob"
                       value={dob}
+                      required
                       onChange={(e) => {
                         setDob(e.target.value);
                       }}
@@ -133,7 +141,6 @@ const LoginPage = () => {
 
                 <button
                   type="submit"
-                  
                   className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                 >
                   <svg
@@ -165,8 +172,7 @@ const LoginPage = () => {
               </div>
             </form>
             {/* End Form */}
-            {JSON.stringify(gender)}
-            {JSON.stringify(dob)}
+          
             {/* <button onClick={()=>toast.error("hiii")}>taost</button> */}
           </div>
         </div>

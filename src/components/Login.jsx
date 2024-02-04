@@ -7,7 +7,7 @@ const Login = () => {
     onClick={()=>navigate('/login')}
 
       type="button"
-      className="flex items-center gap-1 bg-[#000000df] hover:bg-[#000000c8] 
+      className="flex items-center gap-1 bg-[#000000df] transition-all hover:bg-[#000000a1] 
         rounded-[20px] text-[white] px-3 py-1 font-semibold uppercase "
     >
       <IoMdLogIn /> 
