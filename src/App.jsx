@@ -32,7 +32,7 @@ const App = () => {
           const { data } = await axios.get(
             `${import.meta.env.VITE_SERVER}/api/v1/user/${user.uid}`
           );
-          console.log(data.user);
+          // console.log(data.user);
           dispatch(userExist(data.user));
         } catch (error) {}
       }
@@ -53,17 +53,27 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <ProtectedRoutes isAuthenticate={true}>
+            <ProtectedRoutes isAuthenticate={user}>
               <LoginPage />
             </ProtectedRoutes>
           }
         />
 
         {/* admin dashboard  */}
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/product" element={<Product />} />
-        <Route path="/admin/transaction" element={<Transaction />} />
-        <Route path="/admin/customer" element={<Customer />} />
+        <Route
+          path=""
+          element={
+            <ProtectedRoutes
+              isAuthenticate={user}
+              adminOnly={user.role === "admin" ? true : false}
+            />
+          }
+        >
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/product" element={<Product />} />
+          <Route path="/admin/transaction" element={<Transaction />} />
+          <Route path="/admin/customer" element={<Customer />} />
+        </Route>
 
         {/* error  */}
         <Route path="*" element={<NotFound />} />

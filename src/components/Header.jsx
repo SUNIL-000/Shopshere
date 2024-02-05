@@ -6,7 +6,7 @@ import Logout from "./Logout";
 import { FaUserAlt } from "react-icons/fa";
 
 const Header = ({ user }) => {
-  console.log(user._id);
+  // console.log(user._id);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="py-3 ">

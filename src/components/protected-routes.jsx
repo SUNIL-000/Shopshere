@@ -1,13 +1,16 @@
-import { Navigate, useNavigate } from "react-router-dom"
+import { Navigate, Outlet, useNavigate } from "react-router-dom"
 
 
-const ProtectedRoutes = ({children,isAuthenticate}) => {
+const ProtectedRoutes = ({children,isAuthenticate,adminOnly}) => {
   // const navigate= useNavigate();
 
   if(isAuthenticate){
      return <Navigate  to={"/"}/>
   }
-  return children
+  if(adminOnly){
+    return <Navigate  to={"/"}/>
+ }
+  return children ? children : <Outlet />
   
 }
 
