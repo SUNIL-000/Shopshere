@@ -10,6 +10,7 @@ export const userApi = createApi({
           url: "new",
           method: "POST",
           body: user,
+          
         }),
       }),
   }),
