@@ -14,14 +14,14 @@ const LoginPage = () => {
   const loginHandler = async (e) => {
     try {
       e.preventDefault();
-  
+
       // Use GoogleAuthProvider for authentication
       const provider = new GoogleAuthProvider();
-  
+
       // Sign in with Google popup
       const { user } = await signInWithPopup(auth, provider);
-      console.log('Logged in user:', user);
-  
+      console.log("Logged in user:", user);
+
       const { data } = await login({
         _id: user.uid,
         name: user.displayName,
@@ -30,22 +30,22 @@ const LoginPage = () => {
         gender,
         dob,
       });
-  
+
       // Assuming your login function returns some data
-     
-      console.log('Login data:', data);
-  
+
+      console.log("Login data:", data);
+
       // If the login was successful, navigate to "/"
       if (data) {
         toast.success(data.message);
-        console.log(data)
+        console.log(data);
         // navigate("/");
       } else {
-       toast.error('Error occurred during login');
+        toast.error("Error occurred during login");
         // toast.error(data.message)
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error("Error during login:", error);
     }
   };
   return (
@@ -172,7 +172,7 @@ const LoginPage = () => {
               </div>
             </form>
             {/* End Form */}
-          
+
             {/* <button onClick={()=>toast.error("hiii")}>taost</button> */}
           </div>
         </div>

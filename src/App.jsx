@@ -18,26 +18,37 @@ import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
 import { auth } from "./Firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { userExist } from "./redux/reducer/userReducer";
+import { userExist, userNotExist } from "./redux/reducer/userReducer";
 import ProtectedRoutes from "./components/protected-routes";
+import NewProduct from "./components/dashboard/NewProduct";
 
 const App = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         try {
           const { data } = await axios.get(
             `${import.meta.env.VITE_SERVER}/api/v1/user/${user.uid}`
           );
-          // console.log(data.user);
+
           dispatch(userExist(data.user));
-        } catch (error) {}
+        } catch (error) {
+          // Handle error appropriately
+        }
+      } else {
+        // Handle logout here (e.g., clear user state)
+        dispatch(userNotExist());
       }
     });
+
+    return () => unsubscribe();
   }, []);
+
+  // Check if user exists and has a role before accessing the role property
+  const isAdmin = user && user.role === "admin";
   return loading ? (
     <h1>Loading...</h1>
   ) : (
@@ -53,7 +64,7 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <ProtectedRoutes isAuthenticate={user}>
+            <ProtectedRoutes isAuthenticate={user ? false : true}>
               <LoginPage />
             </ProtectedRoutes>
           }
@@ -64,8 +75,8 @@ const App = () => {
           path=""
           element={
             <ProtectedRoutes
-              isAuthenticate={user}
-              adminOnly={user.role === "admin" ? true : false}
+              isAuthenticate={user ? true : false}
+              adminOnly={isAdmin}
             />
           }
         >
@@ -73,6 +84,7 @@ const App = () => {
           <Route path="/admin/product" element={<Product />} />
           <Route path="/admin/transaction" element={<Transaction />} />
           <Route path="/admin/customer" element={<Customer />} />
+          <Route path="/admin/newproduct" element={<NewProduct />} />
         </Route>
 
         {/* error  */}

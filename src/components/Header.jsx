@@ -5,7 +5,8 @@ import Login from "./Login";
 import Logout from "./Logout";
 import { FaUserAlt } from "react-icons/fa";
 
-const Header = ({ user }) => {
+const Header = ({user}) => {
+  
   // console.log(user._id);
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -16,7 +17,7 @@ const Header = ({ user }) => {
           className=" font-bold uppercase flex justify-center gap-2 drop-shadow-md text-lg md:text-xl items-center  "
         >
           <span>
-            <img src="/trolley.png" alt="" height={28} width={28} />
+            <img src="/trolley.png" alt="bannerImage" height={28} width={28} />
           </span>
           <span>Shopshere</span>
         </Link>
@@ -26,7 +27,7 @@ const Header = ({ user }) => {
         </div>
 
         <div>
-          {user._id ? (
+          {user && user?._id ? (
             <div className=" relative ">
               <button
                 onClick={() => {
@@ -55,11 +56,11 @@ const Header = ({ user }) => {
                         <div className=" flex flex-col flex-1 ">
                           <div className="font-medium relative text-xl leading-tight text-gray-900">
                             <span className="truncate l- uppercase text-lg text-[#D98880] relative pr-2">
-                              {user.name}
+                              {user?.name}
                             </span>
                           </div>
                           <p className="font-normal text-base leading-tight text-gray-500 truncate">
-                            {user.email}
+                            {user?.email}
                           </p>
                         </div>
                       </div>
@@ -74,15 +75,16 @@ const Header = ({ user }) => {
                         </Link>
                       </nav>
                     </div>
-                    {user.role === "admin" && (
+                    {user?.role === "admin" && (
                       <div aria-label="navigation" className="py-1">
                         <nav className="grid gap-1">
                           <Link
-                            href="/"
+                            to="/admin/dashboard"
                             className="flex items-center leading-6 space-x-3 py-2 px-4 w-full text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
                           >
-                            <span>Dashboard</span>
+                            Dashboard
                           </Link>
+                          <Link to={'/'}>home</Link>
                         </nav>
                       </div>
                     )}
